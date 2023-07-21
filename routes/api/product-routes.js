@@ -73,6 +73,9 @@ router.post('/', (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const product = await Product.findByPk(req.params.id);
+    if (!product) {
+      return res.status(404).json('Product not found.');
+    };
     await product.update(req.body);
     await product.save();
     if (req.body.tagIds) {
